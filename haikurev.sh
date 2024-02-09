@@ -1,4 +1,4 @@
-#!/usr/bin/env bash   
+#!/bin/bash   
  
 if [ -z "$SCRIPT_DIR" ]
 then
@@ -39,7 +39,8 @@ if [ -z "$content" ]; then
    exit 1 
 fi
 
-versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
+versions=$(echo "$content" | grep -a -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
+
 versions="current"$'\n'"$versions"
 
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
