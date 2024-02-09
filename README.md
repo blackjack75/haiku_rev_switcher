@@ -2,6 +2,10 @@
 
 This little bash script lets you switch nightly releases in Haiku easily. It fetches the latest from the web and lets you pick a revision to switch to.
 
+This basically helps you do faster what is [explained here](https://www.haiku-os.org/guides/daily-tasks/updating-system/)
+
+
+
 It looks like this:
 
 ```
