@@ -7,7 +7,6 @@ export SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}" )" )" &&
 #
 fi
 
-read
 # Retrieve the active hrev value using uname -a
 # how do I find the r1~beta4_ string from the current install ?
 clear
