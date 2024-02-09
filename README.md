@@ -20,9 +20,13 @@ It looks like this:
 
 Installing:
 
+```
   git clone https://github.com/blackjack75/haiku_rev_switcher
+```
 
 Running:
 
+```
   ./haikurev.sh
+```
 
