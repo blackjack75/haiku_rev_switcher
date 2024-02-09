@@ -17,12 +17,21 @@ else
     exit 1
 fi
 
+
+echo "----------------------------"
 echo "Active build: $active_build"
+echo "----------------------------"
 
 echo "Fetching versions from:"
 echo $url 
+
 # Fetch the content from the URL and extract the 10 most recent version numbers
 content=$(curl --connect-timeout 20 -s $url)
+if [ -z "$content" ]; then
+   echo "Ooops - server responded with empty string. Maybe a timeout"
+   exit 1 
+fi
+
 versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
 
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
