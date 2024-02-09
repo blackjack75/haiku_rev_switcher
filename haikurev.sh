@@ -11,7 +11,9 @@ fi
 # how do I find the r1~beta4_ string from the current install ?
 clear
 nblines=20
+stable='r1beta4'
 basever='r1~beta4_'
+
 active_build=$basever$(uname -a | grep -o 'hrev[0-9]*' )
 
 uname_output=$(uname -a)
@@ -41,7 +43,7 @@ fi
 
 versions=$(echo "$content" | grep -a -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
 
-versions="current"$'\n'"$versions"
+versions="stable"$'\n'"current"$'\n'"$versions"
 
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
 
@@ -49,8 +51,11 @@ selected_index=0
 while true; do
     clear
     echo "----------------------------"
-    echo "Pick the Haiku Revision to install"
-    echo "Only 'current' will enable future updates"
+    echo "Pick Haiku Revision to install"
+    echo "----------------------------"
+    echo "If anything goes wrong go back to stable"
+    echo "Current will enable UNSTABLE nightly builds"
+    echo "Pick a hrev to test and keep a specific build"
     echo "----------------------------"
     echo 
     # Display the version numbers with index
@@ -95,7 +100,7 @@ done
 # Extract the part after "hrev" and print it
 hrev=$(echo "$selected_version" | sed 's/.*hrev//')
 
-if [ "$hrev" != "current" ]; then
+if [ "$hrev" != "current" ] && [ "$hrev" != "stable" ]; then
 tag=hrev$hrev
 source $SCRIPT_DIR/haikuchanges.sh
 fi
@@ -107,8 +112,11 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     echo "----------------------------"
     echo "Installing revision: $hrev"
     echo "----------------------------"
+    if [ "$hrev" = "stable" ]; then
+       
+       upurl="https://eu.hpkg.haiku-os.org/haiku/$stable/$(getarch)/current"
     
-    if [ "$hrev" = "current" ]; then
+    elif [ "$hrev" = "current" ]; then
        
        upurl="https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current"
     else
