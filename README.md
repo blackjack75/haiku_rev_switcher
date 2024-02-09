@@ -27,6 +27,7 @@ Installing:
 Running:
 
 ```
+  cd haiku_rev_switcher
   ./haikurev.sh
 ```
 
