@@ -1,5 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash   
+ 
+if [ -z "$SCRIPT_DIR" ]
+then
+#Find script original dir even if called with a symlink
+export SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}" )" )" && pwd )"
+#
+fi
 
+read
 # Retrieve the active hrev value using uname -a
 # how do I find the r1~beta4_ string from the current install ?
 clear
@@ -84,6 +92,9 @@ done
 
 # Extract the part after "hrev" and print it
 hrev=$(echo "$selected_version" | sed 's/.*hrev//')
+
+tag=hrev$hrev
+source $SCRIPT_DIR/haikuchanges.sh
 
 # Prompt user to launch next command
 read -p "Do you want to proceed installing Haiku revision $hrev (y/n): " choice
