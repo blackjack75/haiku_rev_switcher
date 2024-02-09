@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Retrieve the active hrev value using uname -a
-# how do I find the r1~beta4 ?
+# how do I find the r1~beta4_ string from the current install ?
 clear
+nblines=20
 basever='r1~beta4_'
 active_build=$basever$(uname -a | grep -o 'hrev[0-9]*' )
 
@@ -22,7 +23,7 @@ echo "Fetching versions from:"
 echo $url 
 # Fetch the content from the URL and extract the 10 most recent version numbers
 content=$(curl --connect-timeout 20 -s $url)
-versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n 10)
+versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
 
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
 
@@ -30,7 +31,7 @@ selected_index=0
 while true; do
     clear
     echo "----------------------------"
-    echo "Pick the Revision to install"
+    echo "Pick the Haiku Revision to install"
     echo "----------------------------"
     echo 
     # Display the version numbers with index
