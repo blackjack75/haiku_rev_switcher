@@ -40,6 +40,7 @@ if [ -z "$content" ]; then
 fi
 
 versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n $nblines)
+versions="current"$'\n'"$versions"
 
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
 
@@ -48,6 +49,7 @@ while true; do
     clear
     echo "----------------------------"
     echo "Pick the Haiku Revision to install"
+    echo "Only 'current' will enable future updates"
     echo "----------------------------"
     echo 
     # Display the version numbers with index
@@ -92,8 +94,10 @@ done
 # Extract the part after "hrev" and print it
 hrev=$(echo "$selected_version" | sed 's/.*hrev//')
 
+if [ "$hrev" != "current" ]; then
 tag=hrev$hrev
 source $SCRIPT_DIR/haikuchanges.sh
+fi
 
 # Prompt user to launch next command
 read -p "Do you want to proceed installing Haiku revision $hrev (y/n): " choice
@@ -103,7 +107,15 @@ if [[ $choice == "y" || $choice == "Y" ]]; then
     echo "Installing revision: $hrev"
     echo "----------------------------"
     
-    upurl="https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/$basever"hrev"$hrev"
+    if [ "$hrev" = "current" ]; then
+       
+       upurl="https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/current"
+    else
+
+       upurl="https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/$basever"hrev"$hrev"
+    
+    fi
+
     pkgman add $upurl
     pkgman full-sync
     echo 
