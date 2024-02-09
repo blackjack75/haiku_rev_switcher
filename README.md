@@ -4,6 +4,7 @@ This little bash script lets you switch nightly releases in Haiku easily. It fet
 
 It looks like this:
 
+```
   ----------------------------
   Pick the Haiku Revision to install
   ----------------------------
@@ -15,6 +16,7 @@ It looks like this:
     r1~beta4_hrev57560
     r1~beta4_hrev57554
     r1~beta4_hrev57545
+```
 
 Installing:
 
