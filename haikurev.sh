@@ -18,20 +18,17 @@ fi
 
 echo "Active build: $active_build"
 
-echo "Fetching $url" 
+echo "Fetching versions from:"
+echo $url 
 # Fetch the content from the URL and extract the 10 most recent version numbers
-content=$(curl -s $url)
+content=$(curl --connect-timeout 20 -s $url)
 versions=$(echo "$content" | grep -o '"r1~beta[0-9]_hrev[0-9]*"' | sed 's/"//g' | sort -r | head -n 10)
 
-# Convert the version numbers to an array
 IFS=$'\n' read -r -d '' -a versions_array <<< "$versions"
 
-# Prompt user to select a version
 selected_index=0
 while true; do
-    # Clear the screen
     clear
-
     echo "----------------------------"
     echo "Pick the Revision to install"
     echo "----------------------------"
@@ -52,10 +49,8 @@ while true; do
         fi
     done
 
-    # Read user input
     read -rsn1 input
 
-    # Handle arrow key input
     case "$input" in
         "A") # Up arrow key
             selected_index=$((selected_index - 1))
@@ -69,7 +64,7 @@ while true; do
             ;;
     esac
 
-    # Ensure selected index stays within bounds
+    # Check bounds limits
     if [ $selected_index -lt 0 ]; then
         selected_index=0
     elif [ $selected_index -ge ${#versions_array[@]} ]; then
@@ -84,16 +79,23 @@ hrev=$(echo "$selected_version" | sed 's/.*hrev//')
 read -p "Do you want to proceed installing Haiku revision $hrev (y/n): " choice
 echo
 if [[ $choice == "y" || $choice == "Y" ]]; then
+    echo "----------------------------"
     echo "Installing revision: $hrev"
+    echo "----------------------------"
+    
     upurl="https://eu.hpkg.haiku-os.org/haiku/master/$(getarch)/$basever"hrev"$hrev"
     pkgman add $upurl
     pkgman full-sync
-
-    read -p "Do you want to reboot now ?" 
+    echo 
+    echo "----------------------------"
+    read -p "Do you want to reboot now ? (y/n)" choice
+    echo "----------------------------"
     echo
     if [[ $choice == "y" || $choice == "Y" ]]; then
       echo "Rebooting now..."
       shutdown -r  -s 
+    else
+      echo "Ok. But one day you will have to reboot. We all do."
     fi
 
 else
