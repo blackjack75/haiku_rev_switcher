@@ -5,9 +5,39 @@ if [ -z "$tag" ]; then
 	echo
 	echo
 fi
-if [ -n "$HAIKU_SRC" ]; then
 
-cd $HAIKU_SRC
+if [ -n "$HAIKU_SRC" ]; then
+   echo
+   echo "You have Haiku Sources installed"
+   echo "in $HAIKU_SRC"
+   read -p "check for remote  changes (y/n) " response
+   echo
+   
+ if [[ $response =~ ^[Yy]$ ]]; then
+   cd $HAIKU_SRC
+
+   echo "Fetching state for \$HAIKU_SRC"
+
+   git fetch
+
+   if [ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]; then
+     echo "!! HAIKU-SRC - your branch is behind the remote repository."
+     read -p "Pull latest changes? (y/n) " response
+     echo
+     if [[ $response =~ ^[Yy]$ ]]; then
+        git pull
+     else
+        echo "Okay, doing nothing. You may not see recent commit messages if $tag is recent."
+     fi
+   else
+       echo "OK - Haiku source is up to date with remote"
+   fi
+else
+
+        echo "Okay, doing nothing. You may not see recent commit messages if $tag is recent."
+
+fi
+
 
 echo "Commit messages for tag $tag :"
 echo
