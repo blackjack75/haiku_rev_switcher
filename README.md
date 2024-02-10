@@ -9,17 +9,22 @@ This basically helps you do faster what is [explained here](https://www.haiku-os
 It looks like this:
 
 ```
-  ----------------------------
-  Pick the Haiku Revision to install
-  ----------------------------
-  
-  > r1~beta4_hrev57575
-    r1~beta4_hrev57573 (Installed)
-    r1~beta4_hrev57571
-    r1~beta4_hrev57564
-    r1~beta4_hrev57560
-    r1~beta4_hrev57554
-    r1~beta4_hrev57545
+----------------------------
+Pick Haiku Revision to install
+----------------------------
+If anything goes wrong go back to stable
+Current will enable UNSTABLE nightly builds
+Pick a hrev to test and keep a specific build
+----------------------------
+
+> stable
+  current
+  r1~beta4_hrev57576
+  r1~beta4_hrev57575
+  r1~beta4_hrev57573
+  r1~beta4_hrev57571
+  r1~beta4_hrev57564
+  r1~beta4_hrev57560
 ```
 
 Installing:
