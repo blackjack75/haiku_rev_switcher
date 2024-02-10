@@ -8,14 +8,16 @@ fi
 
 if [ -n "$HAIKU_SRC" ]; then
    echo
+   
+   # must cd anyways to show commits even if we don't update
+   cd $HAIKU_SRC
+
    echo "You have Haiku Sources installed"
    echo "in $HAIKU_SRC"
    read -p "check for remote  changes (y/n) " response
    echo
    
  if [[ $response =~ ^[Yy]$ ]]; then
-   cd $HAIKU_SRC
-
    echo "Fetching state for \$HAIKU_SRC"
 
    git fetch
