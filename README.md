@@ -4,6 +4,7 @@ This little bash script lets you switch nightly releases in Haiku easily. It fet
 
 This basically helps you do faster what is [explained here](https://www.haiku-os.org/guides/daily-tasks/updating-system/)
 
+It also checks if you have a local $HAIKU_SRC installed and if so  will show you commit messages related with this selected revision (and even offer to fetch/pull changes).
 
 
 It looks like this:
