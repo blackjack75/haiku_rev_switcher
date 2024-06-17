@@ -19,4 +19,4 @@ else
     echo "Symbolic link created."
 fi
 echo
-echo "You can now run haikudev from anywhere"
+echo "You can now run haikurev from anywhere"
