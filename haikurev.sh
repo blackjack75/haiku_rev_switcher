@@ -11,8 +11,8 @@ fi
 # how do I find the r1~beta4_ string from the current install ?
 clear
 nblines=20
-stable='r1beta4'
-basever='r1~beta4_'
+stable='r1beta5'
+basever='r1~beta5_'
 
 active_build=$basever$(uname -a | grep -o 'hrev[0-9]*' )
 
